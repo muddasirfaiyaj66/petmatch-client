@@ -47,6 +47,9 @@ const Footer = () => {
       </a>
       . All Rights Reserved.
     </span>
+   <span className="flex justify-center items-center text-gray-500">
+   <a href="https://www.freepik.com">Image by  Freepik</a>
+   </span>
   </div>
 </footer>
 

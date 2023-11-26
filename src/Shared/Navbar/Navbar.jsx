@@ -28,10 +28,10 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-base-100">
-        <div className="navbar max-w-screen-xl mx-auto  ">
-      <div className="navbar-start">
-        {/* drop */}
+    
+        <div className="navbar fixed z-10 bg-black bg-opacity-50    ">
+      <div className="navbar-start lg:ml-8">
+        
         <div >
           <Link to='/'>
           <img
@@ -43,13 +43,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center hidden  md:flex">
-        <ul className="menu menu-horizontal px-1 font-bold gap-5 text-lg">
+        <ul className="menu menu-horizontal px-1 font-bold gap-5 text-lg text-white">
           {navLinks}
         </ul>
       </div>
       {/* avatar part  */}
 
-      <div className="navbar-end">
+      <div className="navbar-end mr-8">
         <div className="flex px-2">
           <div>
             <button className="btn">hello</button>
@@ -83,10 +83,10 @@ const Navbar = () => {
             <label tabIndex={0} className="btn btn-ghost md:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-8 w-8"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
+                stroke="white"
               >
                 <path
                   strokeLinecap="round"
@@ -107,7 +107,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-    </div>
+   
   );
 };
 

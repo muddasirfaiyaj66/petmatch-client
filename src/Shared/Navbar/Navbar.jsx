@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+  const {user, logOut}= useAuth()
   const navLinks = (
     <>
       <li>
@@ -12,6 +14,28 @@ const Navbar = () => {
           }
         >
           Home
+        </NavLink>
+      </li>
+      <li>
+        {" "}
+        <NavLink
+          to="/pet-listing"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#FFA500]  text-white " : ""
+          }
+        >
+          Pet Listing
+        </NavLink>
+      </li>
+      <li>
+        {" "}
+        <NavLink
+          to="/donation-campaigns"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#FFA500]  text-white " : ""
+          }
+        >
+          Donation Campaigns
         </NavLink>
       </li>
       <li>
@@ -49,11 +73,10 @@ const Navbar = () => {
       </div>
       {/* avatar part  */}
 
-      <div className="navbar-end mr-8">
+      <div className="navbar-end md:mr-8">
         <div className="flex px-2">
           <div>
-            <button className="btn">hello</button>
-            {/* {
+            {
                         user?.email ? <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
@@ -64,6 +87,16 @@ const Navbar = () => {
                                 <li>
                                     <button className="btn btn-sm  btn-ghost">{user.displayName}</button>
 
+                                </li>
+                                <li>
+                                  
+                                  <button className="btn my-3 ">
+                                 <Link to='/dashboard'>
+                                 Dashboard
+                                 </Link>
+                                  </button>
+                                  
+                                
                                 </li>
                                 <li>
                                     <button className="btn btn-sm  btn-ghost bg-red-500 text-white font-bold"
@@ -77,7 +110,7 @@ const Navbar = () => {
                             <Link to='/login'>
                                 <button className="btn btn-md  btn-ghost hover:bg-[#3839AF] px-8 bg-black text-white font-bold">Login</button>
                             </Link>
-                    } */}
+                    }
           </div>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost md:hidden">

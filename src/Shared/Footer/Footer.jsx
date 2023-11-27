@@ -40,9 +40,10 @@ const Footer = () => {
       </ul>
     </div>
     <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
+   <div className="text-center">
+   <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
       © 2023{" "}
-      <a href="https://flowbite.com/" className="hover:underline">
+      <a href="/" className="hover:underline">
         PetMatch™
       </a>
       . All Rights Reserved.
@@ -50,6 +51,7 @@ const Footer = () => {
    <span className="flex justify-center items-center text-gray-500">
    <a href="https://www.freepik.com">Image by  Freepik</a>
    </span>
+   </div>
   </div>
 </footer>
 

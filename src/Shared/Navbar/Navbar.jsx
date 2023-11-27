@@ -28,17 +28,17 @@ const Navbar = () => {
     </>
   );
   return (
-    
-        <div className="navbar fixed z-10 bg-black bg-opacity-50    ">
+
+    <div className="navbar fixed z-10 bg-black bg-opacity-50    ">
       <div className="navbar-start lg:ml-8">
-        
+
         <div >
           <Link to='/'>
-          <img
-            className=" w-[120px] h-[80px]  flex items-center justify-center"
-            src="logo.png"
-            alt=""
-          />
+            <img
+              className=" w-[120px] h-[80px]  flex items-center justify-center"
+              src="logo.png"
+              alt=""
+            />
           </Link>
         </div>
       </div>
@@ -107,7 +107,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-   
+
   );
 };
 

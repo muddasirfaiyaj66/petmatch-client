@@ -59,7 +59,7 @@ const Navbar = () => {
         <div >
           <Link to='/'>
             <img
-              className=" w-[120px] h-[80px]  flex items-center justify-center"
+              className=" w-[120px] h-[90px]  flex items-center justify-center"
               src="logo.png"
               alt=""
             />
@@ -80,7 +80,7 @@ const Navbar = () => {
                         user?.email ? <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                    <img src={user.photoURL? user.photoURL : 'nouser.png'} alt={user.displayName} />
+                                    <img src={user.photoURL? user.photoURL : ''} alt={user.displayName} />
                                 </div>
                             </label>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
@@ -108,7 +108,7 @@ const Navbar = () => {
                         </div>
                             :
                             <Link to='/login'>
-                                <button className="btn btn-md  btn-ghost hover:bg-[#3839AF] px-8 bg-black text-white font-bold">Login</button>
+                                <button className="btn btn-sm  btn-ghost hover:bg-[#FF0000] px-8 bg-black text-white font-bold">Login</button>
                             </Link>
                     }
           </div>

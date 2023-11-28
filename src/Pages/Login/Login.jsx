@@ -1,18 +1,40 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { Formik } from 'formik';
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
     const {login,signInWithGoogle,signInWithGithub} = useAuth();
     const handleGoogleLogin = ()=>{
         signInWithGoogle()
         .then(res=>{
-            console.log("google login success", res);
+          console.log(res);
+          if (res) {
+            Swal.fire({
+                icon: "success",
+                title: "Congrats!!!",
+                text: "Log in Successfully",
+            });
+            //navigate after register
+            navigate(from, { replace: true });
+        }
         })
     }
     const handleGithubLogin = ()=>{
         signInWithGithub()
         .then(res=>{
-            console.log("github login success", res)
+          if (res) {
+            Swal.fire({
+                icon: "success",
+                title: "Congrats!!!",
+                text: "Log in Successfully",
+            });
+            //navigate after register
+            navigate(from, { replace: true });
+        }
         })
     }
     return (
@@ -35,8 +57,21 @@ const Login = () => {
        onSubmit={(values, { setSubmitting }) => {
          setTimeout(() => {
            
-           
+           const email = values.email;
+           const password = values.password;
             console.log('success',  values.email, values.password)
+            login(email,password)
+            .then(res=>{
+              if (res.data.insertedId) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Congrats!!!",
+                    text: "Log in Successfully",
+                });
+                //navigate after register
+                navigate(from, { replace: true });
+            }
+            })
           
            setSubmitting(false);
          }, 400);

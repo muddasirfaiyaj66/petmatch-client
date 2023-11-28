@@ -4,6 +4,9 @@ import ErrorPage from "../Error/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Login/Register/Register";
+import Dashboard from "../Layouts/Dashboard";
+import AddAPet from "../Pages/Dashboard/AddAPet/AddAPet";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +28,20 @@ const router = createBrowserRouter([
     {
       path:'/register',
       element: <Register></Register>
+    }, {
+      path:'/dashboard',
+      element:<PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>,
+
+      children:[
+        {
+          path:'add-a-pet',
+          element:<PrivateRoute>
+            <AddAPet></AddAPet>
+          </PrivateRoute>
+        }
+      ]
     }
   ]);
 

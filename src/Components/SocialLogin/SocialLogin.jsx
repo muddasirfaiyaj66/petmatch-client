@@ -1,9 +1,11 @@
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const SocialLogin = () => {
+    const axiosSecure = useAxiosSecure()
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
@@ -11,31 +13,74 @@ const SocialLogin = () => {
     const handleGoogleLogin = ()=>{
         signInWithGoogle()
         .then(res=>{
-          console.log(res);
-          if (res) {
-            Swal.fire({
+           
+          
+          const userInfo ={
+            email: res?.user?.email,
+            name: res?.user?.displayName,
+            image:res?._tokenResponse?.photoUrl
+
+          }
+          axiosSecure.post('/users',userInfo)
+          .then(res=>{
+            if(res?.data){
+              console.log(res.data);
+              Swal.fire({
                 icon: "success",
                 title: "Congrats!!!",
-                text: "Log in Successfully",
-            });
-            //navigate after register
-            navigate(from, { replace: true });
-        }
+                text: "Successfully Login",
+              });
+              
+              //navigate after log in
+            navigate(from, {replace:true})
+            }
+            })
+        
+       .catch((error) => {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `${error.message}`,
+              });
+         
         })
-    }
+    })
+    };
     const handleGithubLogin = ()=>{
         signInWithGithub()
         .then(res=>{
-          if (res) {
-            Swal.fire({
-                icon: "success",
-                title: "Congrats!!!",
-                text: "Log in Successfully",
-            });
-            //navigate after register
-            navigate(from, { replace: true });
-        }
-        })
+           
+          
+            const userInfo ={
+              email: res?.user?.email,
+              name: res?.user?.displayName,
+              image:res?._tokenResponse?.photoUrl
+  
+            }
+            axiosSecure.post('/users',userInfo)
+            .then(res=>{
+              if(res?.data){
+                console.log(res.data);
+                Swal.fire({
+                  icon: "success",
+                  title: "Congrats!!!",
+                  text: "Successfully Login",
+                });
+                
+                //navigate after log in
+              navigate(from, {replace:true})
+              }
+              })
+          
+         .catch((error) => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: `${error.message}`,
+                });
+           
+          })
+      })
     }
     return (
         <div>

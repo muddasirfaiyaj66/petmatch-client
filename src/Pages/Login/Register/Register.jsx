@@ -23,6 +23,11 @@ const Register = () => {
         const image = form.image.value;
 
         const accepted = event.target.terms.checked;
+        const userInfo = {
+            name,
+            email,
+            image
+        }
 
         if (password.length < 6) {
             Swal.fire({
@@ -61,11 +66,9 @@ const Register = () => {
         //create user
         createUser(email, password)
             .then((result) => {
-                handleUpdateProfile(name, image).then(() => {
-                    const userInfo = {
-                        name,
-                        email
-                    }
+                handleUpdateProfile(name, image)
+                .then(() => {
+                   
                     axiosPublic.post('/users', userInfo)
                         .then(res => {
                             if (res.data.insertedId) {

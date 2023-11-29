@@ -176,6 +176,7 @@ const AddAPet = () => {
                     <option>Birds</option>
                   </select>
                 </div>
+               
                 <div className="form-control w-full">
                   <label className="label">
                     <span className="label-text font-bold">Location</span>
@@ -188,6 +189,36 @@ const AddAPet = () => {
                     value={formik.values.location}
                     required
                     placeholder="Location"
+                    className="input input-bordered w-full"
+                  />
+                </div>
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-bold">Date</span>
+                  </label>
+                  <input
+                    type="date"
+                    name="date"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.date}
+                    required
+                    placeholder="Date"
+                    className="input input-bordered w-full"
+                  />
+                </div>
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-bold">Time</span>
+                  </label>
+                  <input
+                    type="time"
+                    name="time"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.time}
+                    required
+                    placeholder="Time"
                     className="input input-bordered w-full"
                   />
                 </div>

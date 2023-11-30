@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-
+import logo from '../../../public/logo.png'
 const Navbar = () => {
   const {user, logOut}= useAuth()
   const navLinks = (
@@ -60,7 +60,7 @@ const Navbar = () => {
           <Link to='/'>
             <img
               className=" w-[120px] h-[90px]  flex items-center justify-center"
-              src="logo.png"
+              src={logo}
               alt=""
             />
           </Link>

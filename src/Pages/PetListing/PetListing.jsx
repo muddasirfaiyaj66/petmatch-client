@@ -44,7 +44,7 @@ const uri = `/pets?category=${categoryValue}&name=${searchValue}&sortOrder=dsc&s
     
  const handleSearchChange = (event) => {
     setSearchValue(event.target.value, () => {
-      console.log(searchValue); // Log the updated value in the callback
+      console.log(searchValue); 
       setLoading(true);
       
     });
@@ -52,8 +52,7 @@ const uri = `/pets?category=${categoryValue}&name=${searchValue}&sortOrder=dsc&s
   
  const handleCategoryChange = (event) => {
     setCategoryValue(event.target.value, () => {
-      console.log(categoryValue); // Log the updated value in the callback
-      setLoading(true)
+      console.log(categoryValue); 
      
       refetch();
       setLoading(false)
@@ -67,7 +66,7 @@ const uri = `/pets?category=${categoryValue}&name=${searchValue}&sortOrder=dsc&s
    
     refetch();
     setLoading(false)
-    // Perform the search or other actions based on the state values
+
     console.log('Search:', searchValue);
     console.log('Category:', categoryValue);
  };
@@ -82,7 +81,7 @@ const uri = `/pets?category=${categoryValue}&name=${searchValue}&sortOrder=dsc&s
 
 },[isLoading])
   
-//   console.log(data);
+
  const handleInfiniteScroll = async () => {
     try {
 //     //   console.log("scrollHeight" + document.documentElement.scrollHeight);
@@ -93,10 +92,9 @@ const uri = `/pets?category=${categoryValue}&name=${searchValue}&sortOrder=dsc&s
         window.innerHeight + document.documentElement.scrollTop + 1 >=
         document.documentElement.scrollHeight
       ) {
-        if (page <=( totalPages || 5) ) { // Check if the current page number has exceeded the total number of pages
-            setLoading(true);
+        if (page <=( totalPages || 5) ) { 
             setPage((prev) => prev + 1);
-            await refetch(); // Wait for refetch to complete
+            await refetch(); 
             setLoading(false);
           }
            if(page > totalPages){

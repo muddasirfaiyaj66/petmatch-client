@@ -8,6 +8,7 @@ import Dashboard from "../Layouts/Dashboard";
 import AddAPet from "../Pages/Dashboard/AddAPet/AddAPet";
 import PrivateRoute from "./PrivateRoute";
 import PetListing from "../Pages/PetListing/PetListing";
+import CategoryDetails from "../Pages/CategoryDetailsPage/CategoryDetails";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,12 @@ const router = createBrowserRouter([
           path:'pet-listing',
           element:<PrivateRoute>
             <PetListing></PetListing>
+          </PrivateRoute>
+        },
+        {
+          path:'category-details/:category',
+          element:<PrivateRoute>
+            <CategoryDetails></CategoryDetails>
           </PrivateRoute>
         }
       ]

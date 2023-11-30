@@ -72,7 +72,7 @@ const AddAPet = () => {
       
     },
     validate,
-    onSubmit: async (values) => {
+    onSubmit: async (values,  {resetForm}) => {
 
       const imageFile = {image:values.image}
      
@@ -93,13 +93,13 @@ const AddAPet = () => {
           long_description: content,
           image: res?.data?.data?.display_url,
           email: user?.email,
-          adopted: false,
+          adopted: 'false',
 
         };
 
      const petData = await  axiosPublic.post('/pets', formData)
       if(petData.data.insertedId){
-       
+        resetForm();
         Swal.fire({
           position: "top-end",
           icon: "success",

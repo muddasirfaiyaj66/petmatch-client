@@ -1,14 +1,15 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import loadingGip from "../assets/preloader.gif"
+import Loading from "../Components/Loading/Loading";
 
 
 const PrivateRoute = ({children}) => {
     const {user, loading}= useAuth();
     const location =  useLocation();
     if(loading){
-        return <div className="max-w-screen-xl mx-auto">
-            <img src={loadingGip}  className="w-full h-full object-cover" alt="" />
+        return <div className="object-cover h-full w-full">
+            <Loading></Loading>
         </div>
     }
     if(user){

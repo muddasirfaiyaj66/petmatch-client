@@ -5,6 +5,7 @@ import Loading from "../../Components/Loading/Loading";
 import banner from '../../assets/11_30_2023 3_09_01 PM.png'
 import moment from "moment/moment";
 import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const PetDetails = () => {
@@ -57,6 +58,30 @@ const PetDetails = () => {
         }
 
         console.log(adoptFormData);
+
+
+
+        const updateAdopted = { adopted: NewAdopted }
+
+        axiosSecure.put(`/pets/${id}`,{...updateAdopted})
+        .then((res) => {
+            if(res){
+                axiosSecure.post('/adopts',adoptFormData)
+                .then(res=>{
+                    if(res.data.insertedId){
+                        refetch()
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "success",
+                          title:`${name} successfully added in Adopt collection`,
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
+                      }
+                       
+                })
+            }
+        })
     }
     return (
         <div>

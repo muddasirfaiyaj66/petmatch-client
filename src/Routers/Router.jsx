@@ -7,6 +7,7 @@ import Register from "../Pages/Login/Register/Register";
 import Dashboard from "../Layouts/Dashboard";
 import AddAPet from "../Pages/Dashboard/AddAPet/AddAPet";
 import PrivateRoute from "./PrivateRoute";
+import PetListing from "../Pages/PetListing/PetListing";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,12 @@ const router = createBrowserRouter([
             index: true,
             element:<Home></Home>
 
+        },
+        {
+          path:'pet-listing',
+          element:<PrivateRoute>
+            <PetListing></PetListing>
+          </PrivateRoute>
         }
       ]
     },

@@ -15,7 +15,7 @@ const Login = () => {
   const handleLogin = async (values, { setSubmitting }) => {
     try {
       const { email, password } = values;
-      console.log(values);
+  
       const response = await login(email, password);
      
       if (response) {
@@ -28,7 +28,6 @@ const Login = () => {
         navigate(from, { replace: true });
       }
     } catch (error) {
-      // Set error message in case of login failure
       setError(error?.message);
       
     } finally {

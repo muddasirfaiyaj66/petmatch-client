@@ -4,27 +4,51 @@ import { FiEdit } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTable } from "react-table";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 const MyAddedPets = () => {
   const { user } = useAuth();
+  const [currentPage , setCurrentPage]= useState(null);
   const email = user?.email || '';
+const [count,setCount]= useState(0)
   const axiosSecure = useAxiosSecure();
   const { data: petData, isLoading ,refetch} = useQuery({
-    queryKey: ['myaddedpets', { email }],
+    queryKey: ['myaddedpets', { email,currentPage }],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/pets?email=${email}`);
+      const res = await axiosSecure.get(`/pets?email=${email}&page=${currentPage}&limit=10`);
       return res.data;
     }
   });
 
   const {adopted,time,date,location,category,short_description,long_description,image,name}=petData || {};
-
+  axiosSecure.get('/totalPetsData')
+  .then(res=> 
+    {
+     const {count}= res.data;
+      
+      setCount(count)
+    }
+    )
+  const numberOfPages = Math.ceil(count / 10);
+  const pages = [...Array(numberOfPages).keys()]
+  console.log(pages);
   const data = useMemo(() => petData || [], [petData]);
-
+  const CustomAdoptedCell = ({ value }) => {
+    let text = '';
+  
+    if (value === "true") {
+      text = 'Adopted';
+    } else if (value === "false") {
+      text = 'Not Adopted';
+    } else {
+      text = 'Pending';
+    }
+  
+    return <span>{text}</span>;
+  };
   const columns = useMemo(
     () => [
       {
@@ -49,6 +73,7 @@ const MyAddedPets = () => {
       {
         Header: "Adopted",
         accessor: "adopted",
+        Cell: CustomAdoptedCell,
       },
     
     {
@@ -67,7 +92,7 @@ const MyAddedPets = () => {
 
         <Link to={`/dashboard/my-pet-edit/${row.original._id}`}>
           <button>
-          <FiEdit  className="text-xl text-blue-700 "/> 
+          <FiEdit  className="text-2xl font-bold text-[#FFFF99] hover:text-black "/> 
         </button>
         </Link>
       ),
@@ -240,20 +265,34 @@ const handleAdopt = async (id) => {
   }
 };
 
+const handlePrePage = () => {
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const handleNextPage = () => {
+  if (currentPage < pages.length) {
+    setCurrentPage(currentPage + 1);
+  }
+};
 
   return (
     <div className="App">
+      <div className="flex justify-center text-center items-center my-10">
+      <h1 className="uppercase text-center text-5xl mb-10 font-bold text-transparent bg-clip-text bg-gradient-to-r to-[#0000FF] from-[#00ff9d]">My Added Pets</h1>
+      </div>
       <div className="container mx-auto my-8">
         <table
           {...getTableProps()}
-          className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          className="w-full text-sm text-left rtl:text-right rounded-lg bg-gradient-to-r text-white font-bold to-[#0000FF] from-[#00ff9d]"
         >
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-md font-bold rounded-lg  bg-[#FF0505] text-white   uppercase">
             {headerGroups.map((headerGroup) => (
               <tr
                 key={headerGroup._id}
                 {...headerGroup.getHeaderGroupProps()}
-                className="bg-gray-100"
+                className=" rounded-lg"
               >
                 {headerGroup.headers.map((column) => (
                   <th
@@ -286,6 +325,30 @@ const handleAdopt = async (id) => {
             })}
           </tbody>
         </table>
+      </div>
+
+      <div>
+{
+  count > 10 ? 
+
+  <div className="join">
+  <button onClick={handlePrePage} className="join-item btn">«</button>
+ 
+  { 
+                    pages?.map(page=> <button 
+                        className={currentPage === page ? 'join-item btn active' : 'join-item btn'}
+                        onClick={()=> setCurrentPage(page)} 
+                        key={page}
+                        >{page}</button>)
+
+                        
+                }
+
+
+  <button  onClick={handleNextPage} className="join-item btn">»</button>
+</div>
+: ''
+}
       </div>
     </div>
   );

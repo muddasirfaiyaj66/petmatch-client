@@ -73,8 +73,8 @@ const uri = `/pets?category=${categoryValue}&name=${searchValue}&sortOrder=dsc&s
  useEffect(()=>{
    axiosPublic.get('/pets')
    .then(res=>{
-    console.log(res.data.length);
-    const totalPageNum = Math.ceil((res.data.length)/9)
+    console.log(res?.data?.length);
+    const totalPageNum = Math.ceil((res?.data?.length)/9)
     setTotalPages(totalPageNum)
     console.log(totalPages); 
    })

@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import PetListing from "../Pages/PetListing/PetListing";
 import CategoryDetails from "../Pages/CategoryDetailsPage/CategoryDetails";
 import PetDetails from "../Pages/PetDetails/PetDetails";
+import MyAddedPets from "../Pages/Dashboard/MyAddedPets/MyAddedPets";
+import MyPetEdit from "../Pages/Dashboard/MyAddedPets/MyPetEdit/MyPetEdit";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +62,18 @@ const router = createBrowserRouter([
           path:'add-a-pet',
           element:<PrivateRoute>
             <AddAPet></AddAPet>
+          </PrivateRoute>
+        },
+        {
+          path:'my-added-pets',
+          element:<PrivateRoute>
+            <MyAddedPets></MyAddedPets>
+          </PrivateRoute>
+        },
+        {
+          path:'my-pet-edit/:id',
+          element:<PrivateRoute>
+            <MyPetEdit></MyPetEdit>
           </PrivateRoute>
         }
       ]

@@ -6,6 +6,10 @@ import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import SocialLogin from '../../../Components/SocialLogin/SocialLogin';
+
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+
 const Register = () => {
     const { createUser, handleUpdateProfile } = useAuth();
     const axiosPublic = useAxiosPublic();
@@ -14,13 +18,15 @@ const Register = () => {
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
    
-    const handleSubmit = (event) => {
+    const handleSubmit =async (event) => {
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        const image = form.image.value;
+        const image = form?.image?.files[0];
+
+        
 
         const accepted = event.target.terms.checked;
         const userInfo = {
@@ -29,7 +35,7 @@ const Register = () => {
             image
         }
 
-        if (password.length < 6) {
+        if (password?.length < 6) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -62,14 +68,29 @@ const Register = () => {
 
             return;
         }
+        
+        const imageData = {image}
+        console.log(imageData);
+        // const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+       const res= await axiosPublic.post(`https://api.imgbb.com/1/upload?key=${image_hosting_key}`,imageData,{
+        headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+          })
+          console.log(res);
+     
+            const imgBbUrl = res?.data?.data?.display_url;
+            console.log(imgBbUrl);
 
-        //create user
-        createUser(email, password)
+           if(res?.data?.success){
+            
+
+            createUser(email, password)
             .then((result) => {
-                handleUpdateProfile(name, image)
+                handleUpdateProfile(name, imgBbUrl)
                 .then(() => {
                    
-                    axiosPublic.post('/users', userInfo)
+                   axiosPublic.post('/users', userInfo)
                         .then(res => {
                             if (res.data.insertedId) {
                                 Swal.fire({
@@ -92,6 +113,11 @@ const Register = () => {
                     text: `${error?.message}`,
                 });
             });
+           }
+     
+          
+    
+        
     };
 
 
@@ -143,16 +169,18 @@ const Register = () => {
                             </span>
                         </div>
 
-                        <div className="space-y-1 text-sm">
-                            <label className="block dark:text-gray-400">Image Url</label>
-                            <input
-                                type="text"
-                                name="image"
-                                required
-
-                                id="image" placeholder="Enter your image url" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
-
-                        </div>
+                       
+                        <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-bold dark:text-gray-400">Image </span>
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  required
+                  
+                />
+              </div>
                         <div className="flex gap-2 text-sm mt-5 text-[#706F6F]">
                             <p>
                                 <input className="mb-4" type="checkbox" name="terms" id="terms" />

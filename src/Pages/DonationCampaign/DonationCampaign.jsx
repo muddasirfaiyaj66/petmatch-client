@@ -10,7 +10,7 @@ const getArticles = async ({ pageParam = 0}) => {
   try {
    
 
-    const res = await fetch(`http://localhost:5000/api/v1/donationCampaigns?sortOrder=dsc&sortField=lastDate&page=${pageParam}&limit=9`);
+    const res = await fetch(`https://pet-match-server-two.vercel.app/api/v1/donationCampaigns?sortOrder=dsc&sortField=lastDate&page=${pageParam}&limit=9`);
     const data = await res.json();
 
     console.log('Response from server:', data);

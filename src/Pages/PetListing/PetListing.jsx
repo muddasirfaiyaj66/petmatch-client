@@ -12,7 +12,7 @@ const getArticles = async ({ pageParam = 0, categoryValue='',searchValue=''}) =>
   try {
     console.log('Request parameters:', { pageParam, categoryValue, searchValue });
 
-    const res = await fetch(`http://localhost:5000/api/v1/pets?category=${categoryValue}&name=${searchValue}&adopted=false&sortOrder=dsc&sortField=date&page=${pageParam}&limit=9`);
+    const res = await fetch(`https://pet-match-server-two.vercel.app/api/v1/pets?category=${categoryValue}&name=${searchValue}&adopted=false&sortOrder=dsc&sortField=date&page=${pageParam}&limit=9`);
     const data = await res.json();
 
     console.log('Response from server:', data);

@@ -15,6 +15,14 @@ import MyPetEdit from "../Pages/Dashboard/MyAddedPets/MyPetEdit/MyPetEdit";
 import CreateDonationCampaign from "../Pages/Dashboard/CreateDonationCampaign/CreateDonationCampaign";
 import DonationCampaign from "../Pages/DonationCampaign/DonationCampaign";
 import DonationDetails from "../Pages/DonationDetails/DonationDetails";
+import MyDonationsCampaigns from "../Pages/Dashboard/MyDonationsCampaigns/MyDonationsCampaigns";
+import EditMyDonationCampaign from "../Pages/Dashboard/EditMyDonationCampaign/EditMyDonationCampaign";
+import MyDonations from "../Pages/Dashboard/MyDonations/MyDonations";
+import AdoptionRequest from "../Pages/Dashboard/AdoptionRequest/AdoptionRequest";
+import AllUsers from "../Pages/Dashboard/AllUser/AllUsers";
+import AllPets from "../Pages/Dashboard/AllPets/AllPets";
+import AllDonations from "../Pages/Dashboard/AllDonations/AllDonations";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -95,7 +103,57 @@ const router = createBrowserRouter([
           element: <PrivateRoute>
             <CreateDonationCampaign></CreateDonationCampaign>
           </PrivateRoute>
+        },
+        {
+          path:'my-donation-campaign',
+          element: <PrivateRoute>
+            <MyDonationsCampaigns></MyDonationsCampaigns>
+          </PrivateRoute>
+        },
+        {
+          path:'my-donation',
+          element: <PrivateRoute>
+            <MyDonations></MyDonations>
+          </PrivateRoute>
+        },
+        {
+          path:'my-donation-edit/:id',
+          element:<PrivateRoute>
+            <EditMyDonationCampaign></EditMyDonationCampaign>
+          </PrivateRoute>
+        },
+        {
+          path:'adoption-request',
+          element:<PrivateRoute>
+           <AdoptionRequest></AdoptionRequest>
+          </PrivateRoute>
+        },
+       
+        {
+          path:'all-users',
+          element:<PrivateRoute>
+         <AdminRoute>
+         <AllUsers></AllUsers>
+         </AdminRoute>
+          </PrivateRoute>
+        },
+        {
+          path:'all-pets',
+          element:<PrivateRoute>
+        <AdminRoute>
+        <AllPets></AllPets>
+        </AdminRoute>
+          </PrivateRoute>
+        },
+        {
+          path:'all-donations',
+          element:<PrivateRoute>
+          <AdminRoute>
+          <AllDonations></AllDonations>
+          </AdminRoute>
+          </PrivateRoute>
         }
+       
 
       ]
     }

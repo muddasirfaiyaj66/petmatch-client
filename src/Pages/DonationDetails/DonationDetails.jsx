@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useParams } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import useAuth from '../../Hooks/useAuth';
@@ -6,11 +6,16 @@ import { useQuery } from '@tanstack/react-query';
 import Loading from '../../Components/Loading/Loading';
 import moment from 'moment';
 import banner from '../../assets/11602400_4760409.jpg';
-
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from './CheckoutForm';
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK)
 const DonationDetails = () => {
+
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+ 
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['Donations_Details', id],
@@ -19,6 +24,14 @@ const DonationDetails = () => {
       return res.data;
     },
   });
+  const { data:donation } = useQuery({
+    queryKey: ['Donation', id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/donations?email=${user.email}`);
+      return res.data;
+    },
+  });
+
 
   if (isLoading) {
     return <Loading />;
@@ -27,9 +40,18 @@ const DonationDetails = () => {
   if (error || !data) {
     return <div>Error loading donation details. Please try again.</div>;
   }
-
-  const { image, name, long_description, short_description, maxDonationAmount, isPaused,lastDate, lastTime } = data;
+  
+  const { image, name, long_description, short_description, maxDonationAmount, isPaused, lastDate, lastTime } = data;
   const lastTimeOfDonation = moment(lastTime, 'HH:mm').format('hh:mm A');
+
+  const lastDateTime = moment(`${lastDate} ${lastTime}`, 'YYYY-MM-DD HH:mm');
+
+
+  const currentDateTime = moment();
+
+ 
+  const isDonationAllowed = currentDateTime.isBefore(lastDateTime);
+  console.log(isDonationAllowed);
 
   return (
     <div>
@@ -53,6 +75,7 @@ const DonationDetails = () => {
             <div className="text-[#FF0000] font-semibold">
               <p>Last Date of Donation: {lastDate}</p>
               <p>Last Time of Donation: {lastTimeOfDonation}</p>
+             
             </div>
           </div>
 
@@ -66,59 +89,40 @@ const DonationDetails = () => {
           />
         </div>
 
-        {isPaused === 'false' ? 
+        {isPaused === 'false' && isDonationAllowed ?
           <>
-          <button className="btn w-full font-bold bg-[#00ff15] text-white" onClick={() => document.getElementById('my_modal_5').showModal()}>Donate</button>
-          <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+            <button className="btn w-full font-bold bg-[#00ff15] text-white" onClick={() => document.getElementById('my_modal_5').showModal()}>Donate</button>
+            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
               <div className="modal-box">
-                  <form onSubmit={''} className="card-body">
-                      <div className="form-control">
-                          <label className="label">
-                              <span className="label-text">User Name</span>
-                          </label>
-                          <input type="text" disabled defaultValue={user?.displayName} className="input  text-gray-600 input-bordered" required />
-                      </div>
-                      <div className="form-control">
-                          <label className="label">
-                              <span className="label-text">Email</span>
-                          </label>
-                          <input type="email" disabled defaultValue={user?.email} className="input  text-gray-600 input-bordered" required />
+                <Elements stripe={stripePromise}>
+                <CheckoutForm refetch={refetch} id={id} data={data}></CheckoutForm>
+                </Elements>
+                
+                <div className="modal-action">
+                  <form method="dialog">
 
-                      </div>
-                      <div className="form-control">
-                          <label className="label">
-                              <span className="label-text">Phone Number</span>
-                          </label>
-                          <input type="number" name="number" placeholder="Enter your Phone Number" className="input  text-gray-600 input-bordered" required />
-
-                      </div>
-                      <div className="form-control">
-                          <label className="label">
-                              <span className="label-text">Location</span>
-                          </label>
-                          <input type="text" name="user_location" placeholder="Your Location" className="input input-bordered text-gray-600" required />
-
-                      </div>
-                      <div className="form-control  mt-6">
-                          <button className="btn btn-primary modal-action bg-[#2f47ce] flex justify-center items-center font-bold ">Adopt</button>
-                      </div>
+                    <button className="btn">Close</button>
                   </form>
-                  <div className="modal-action">
-                      <form method="dialog">
-
-                          <button className="btn">Close</button>
-                      </form>
-                  </div>
+                </div>
               </div>
-          </dialog>
-      </>
+            </dialog>
+          </>
 
-      :
-      <button disabled className="btn w-full font-bold disabled:bg-[#FF0000] disabled:text-white ">
-      Donation Paused 
-  </button>
-      }
+          :
+          <button disabled className="btn w-full font-bold disabled:bg-[#FF0000] disabled:text-white ">
+            Donation Not Available
+          </button>
+        }
       </div>
+
+
+    <div>
+    {
+        donation[0].payment === 'true' ? 
+        <div>Hello</div>
+        : '' 
+      }
+    </div>
     </div>
   );
 };

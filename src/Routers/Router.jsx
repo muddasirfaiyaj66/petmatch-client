@@ -12,6 +12,9 @@ import CategoryDetails from "../Pages/CategoryDetailsPage/CategoryDetails";
 import PetDetails from "../Pages/PetDetails/PetDetails";
 import MyAddedPets from "../Pages/Dashboard/MyAddedPets/MyAddedPets";
 import MyPetEdit from "../Pages/Dashboard/MyAddedPets/MyPetEdit/MyPetEdit";
+import CreateDonationCampaign from "../Pages/Dashboard/CreateDonationCampaign/CreateDonationCampaign";
+import DonationCampaign from "../Pages/DonationCampaign/DonationCampaign";
+import DonationDetails from "../Pages/DonationDetails/DonationDetails";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +43,17 @@ const router = createBrowserRouter([
           path:'pet-details/:id',
           element: <PrivateRoute>
             <PetDetails></PetDetails>
+          </PrivateRoute>
+        },{
+          path:'donation-campaigns',
+          element:<PrivateRoute>
+            <DonationCampaign></DonationCampaign>
+          </PrivateRoute>
+        },
+        {
+          path:'donation-details/:id',
+          element: <PrivateRoute>
+            <DonationDetails></DonationDetails>
           </PrivateRoute>
         }
       ]
@@ -75,7 +89,14 @@ const router = createBrowserRouter([
           element:<PrivateRoute>
             <MyPetEdit></MyPetEdit>
           </PrivateRoute>
+        },
+        {
+          path:'create-donation',
+          element: <PrivateRoute>
+            <CreateDonationCampaign></CreateDonationCampaign>
+          </PrivateRoute>
         }
+
       ]
     }
   ]);

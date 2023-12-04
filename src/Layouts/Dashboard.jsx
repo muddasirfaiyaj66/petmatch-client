@@ -30,6 +30,16 @@ const Dashboard = () => {
                     </li>
                     <li>
                         <NavLink
+                            to="/dashboard/create-donation"
+                            className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? "bg-[#FFA500]  text-white " : ""
+                            }
+                        >
+                          Create Donation Campaign
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
                             to="/"
                             className={({ isActive, isPending }) =>
                                 isPending ? "pending" : isActive ? "bg-[#FFA500]  text-white " : ""

@@ -61,7 +61,7 @@ const {data:previousData}=useQuery({
 })
 
 console.log(previousData);
-const {name, date,time,age,image,category,location,long_description,short_description}=previousData || {};
+const {name, date,time,age,image,category,location,long_description,adopted,short_description}=previousData || {};
 
   const handleContentChange = (value) => {
     
@@ -111,7 +111,7 @@ const formik = useFormik({
           long_description: content,
           image: res?.data?.data?.display_url,
           email: user?.email,
-          adopted: 'false',
+          adopted: adopted,
 
         };
 

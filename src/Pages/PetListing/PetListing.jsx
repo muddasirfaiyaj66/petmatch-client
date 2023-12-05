@@ -44,7 +44,13 @@ const PetListing = () => {
 
 
   const articles = data?.pages.reduce((acc, page) => {
-    return [...acc, ...page.data];
+    if (page.data && Array.isArray(page.data)) {
+      return [...acc, ...page.data];
+    } else {
+      // Handle the case where page.data is not iterable (e.g., not an array)
+      console.error(`Invalid data type in page: ${typeof page.data}`);
+      return acc;
+    }
   }, []);
   
   console.log('Article', articles);

@@ -23,6 +23,7 @@ import AllUsers from "../Pages/Dashboard/AllUser/AllUsers";
 import AllPets from "../Pages/Dashboard/AllPets/AllPets";
 import AllDonations from "../Pages/Dashboard/AllDonations/AllDonations";
 import AdminRoute from "./AdminRoute";
+import About from "../Pages/Home/Home/About/About";
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,11 @@ const router = createBrowserRouter([
           path:'donation-details/:id',
           element: <PrivateRoute>
             <DonationDetails></DonationDetails>
+          </PrivateRoute>
+        },{
+          path:'about',
+          element: <PrivateRoute>
+            <About></About>
           </PrivateRoute>
         }
       ]

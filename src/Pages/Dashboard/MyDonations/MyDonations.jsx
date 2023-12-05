@@ -99,7 +99,7 @@ const [count,setCount]= useState(0)
             if(res?.data){
                 Swal.fire({
                     title: "Deleted!",
-                    text: "Pet has been deleted.",
+                    text: "Donation has been refunded.",
                     icon: "success"
                   });
             }

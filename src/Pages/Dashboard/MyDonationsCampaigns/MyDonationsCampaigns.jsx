@@ -24,7 +24,7 @@ const [count,setCount]= useState(0)
     }
   });
 
-  const {image,name,maxDonationAmount,totalDonation, isPaused,_id}=campaignData || {};
+  const {image,name,maxDonationAmount,totalDonation,remaining, isPaused,_id}=campaignData || {};
   axiosSecure.get('/totalPetsData')
   .then(res=> 
     {
@@ -37,13 +37,36 @@ const [count,setCount]= useState(0)
   const pages = [...Array(numberOfPages).keys()]
   console.log(pages);
   const data = useMemo(() => campaignData || [], [campaignData]);
-  const CustomTotalCell = ({ value }) => {
-   
+  const CustomTotalCell = ({ value, row }) => {
+    const { maxDonationAmount } = row.original;
   
-   
-    return <progress className="progress progress-accent w-56" value={value} max={maxDonationAmount}></progress>
-    ;
+    // Calculate the progress ratio
+    const progressRatio = (value / maxDonationAmount) * 100;
+  
+    return (
+      <div className="relative pt-1">
+        <div className="flex mb-2 items-center justify-between">
+          <div>
+            <span className="text-xs  inline-block py-1 px-2 uppercase font-bold rounded-full text-teal-600 bg-teal-200">
+              {value} / {maxDonationAmount}
+            </span>
+          </div>
+          <div className="text-right">
+            <span className="text-xs font-semibold inline-block text-red-600">
+              {progressRatio.toFixed(2)}%
+            </span>
+          </div>
+        </div>
+        <div className="flex h-2 mb-4 overflow-hidden text-xs bg-teal-300 rounded">
+          <div
+            style={{ width: `${progressRatio}%` }}
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-teal-500"
+          ></div>
+        </div>
+      </div>
+    );
   };
+ 
   const columns = useMemo(
     () => [
       {
@@ -122,7 +145,7 @@ const [count,setCount]= useState(0)
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, Paused it!"
+          confirmButtonText: `Yes, ${isPaused==='false'? 'paused':'resume'} it!`
         });
     
         if (confirmationResult.isConfirmed) {

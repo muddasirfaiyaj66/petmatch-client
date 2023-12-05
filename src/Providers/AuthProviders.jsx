@@ -54,6 +54,7 @@ const AuthProviders = ({children}) => {
                 // .then(res=>{
 
                 // })
+                setLoading(false)
             }
             else{
                 axiosPublic.post('/logout',loggedUser,{

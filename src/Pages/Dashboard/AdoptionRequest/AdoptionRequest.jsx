@@ -101,7 +101,7 @@ const [count,setCount]= useState(0)
       Header: "Delete",
       accessor: "delete",
       Cell: ({ row }) => (
-        <button className="btn" onClick={() => handleDelete(row.original._id)}>
+        <button className="btn" onClick={() => handleDelete(row.original.petId)}>
           <MdDelete  className="text-xl text-red-500 "/> 
         </button>
       ),
@@ -113,8 +113,9 @@ const [count,setCount]= useState(0)
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
   const handleDelete =async(id)=>{
-    const res = await axiosSecure.delete(`/adopt/${id}`)
+    const res = await axiosSecure.delete(`/adopts/${id}`)
     if(res?.data){
+      refetch()
         Swal.fire({
             position: "top-end",
             icon: "success",

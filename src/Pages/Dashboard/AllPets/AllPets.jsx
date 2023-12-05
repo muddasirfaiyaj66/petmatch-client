@@ -131,6 +131,11 @@ const [count,setCount]= useState(0)
         if (confirmationResult.isConfirmed) {
           const petRes = await axiosSecure.delete(`/pets/${id}`);
           refetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Pet and its adoption entry have been deleted.",
+            icon: "success"
+          });
     
           if (adopted === "pending" || adopted === "true") {
             const adoptRes = await axiosSecure.delete(`/adopts/${id}`);

@@ -81,12 +81,11 @@ const  EditMyDonationCampaign = () => {
   
     const formik = useFormik({
       initialValues: {
-        name: name || '',
-        maxDonationAmount: maxDonationAmount || '',
-        lastDate:lastDate || '',
-        lastTime: lastTime || '',
-        short_description:  short_description || '',
-        long_description: long_description || '',
+        name: name ,
+        maxDonationAmount: maxDonationAmount ,
+        lastDate:lastDate,
+        lastTime: lastTime ,
+        short_description:  short_description ,
         
       },
       validate,

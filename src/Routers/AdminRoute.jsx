@@ -8,6 +8,7 @@ const AdminRoute = ({children}) => {
     const {user, loading}= useAuth();
     const location = useLocation();
     const [isAdmin, isAdminLoading] =useAdmin()
+   
     if(loading || isAdminLoading){
         return <span className="loading loading-lg loading-spinner text-error"></span>
     }

@@ -1,14 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../Hooks/UseAdmin";
+import useAuth from "../Hooks/useAuth";
 
 
 const Dashboard = () => {
+    const {user}= useAuth()
     const [isAdmin] = useAdmin();
     return (
         <div className="flex">
             <div className="w-64 min-h-screen bg-[#000000]">
                 <div className="menu my-6 md:text-xl text-white ">
-                    {isAdmin?
+                    {isAdmin&&
                  <>
                  <li>
                      <NavLink
@@ -40,8 +42,11 @@ const Dashboard = () => {
                        All Donations
                      </NavLink>
                  </li>
-                 </>    
-                :
+                 </> 
+                 
+                        }
+                
+               { (user || isAdmin)&& 
 
                 <>
                 <li >
@@ -105,9 +110,10 @@ const Dashboard = () => {
                       Adoption Request 
                     </NavLink>
                 </li></>
+               
                 }
                   
-                   <div className="divider">
+                
                    <li>
                         <NavLink
                             to="/"
@@ -118,7 +124,7 @@ const Dashboard = () => {
                           Home
                         </NavLink>
                     </li>
-                   </div>
+                  
 
 
                    

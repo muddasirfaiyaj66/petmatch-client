@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import useAuth from '../../../Hooks/useAuth';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 const MyEditor = ({ content, onContentChange }) => {
@@ -76,7 +77,7 @@ const AddAPet = () => {
 
       const imageFile = {image:values.image}
      
-      const res = await axiosPublic.post(image_hosting_api,imageFile,{
+      const res = await axios.post(image_hosting_api,imageFile,{
         headers:{
           'Content-Type': 'multipart/form-data'
         }

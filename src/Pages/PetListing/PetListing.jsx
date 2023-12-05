@@ -41,17 +41,22 @@ const PetListing = () => {
   });
   console.log('DATA', data);
   
-
-
   const articles = data?.pages.reduce((acc, page) => {
     if (page.data && Array.isArray(page.data)) {
+      // Check if page.data is an array and not empty
       return [...acc, ...page.data];
+    } else if (page.data && typeof page.data === 'object') {
+      // Handle the case where page.data is an object
+      // You may need to transform the object into an array based on your requirements
+      // For example, you can convert object values into an array using Object.values()
+      return [...acc, ...Object.values(page.data)];
     } else {
-      // Handle the case where page.data is not iterable (e.g., not an array)
+      // Handle other cases or log an error
       console.error(`Invalid data type in page: ${typeof page.data}`);
       return acc;
     }
   }, []);
+  
   
   console.log('Article', articles);
  

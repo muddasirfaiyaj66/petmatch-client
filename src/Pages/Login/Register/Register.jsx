@@ -6,6 +6,7 @@ import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import SocialLogin from '../../../Components/SocialLogin/SocialLogin';
+import axios from 'axios';
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -72,7 +73,7 @@ const Register = () => {
         const imageData = {image}
         console.log(imageData);
         // const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-       const res= await axiosPublic.post(`https://api.imgbb.com/1/upload?key=${image_hosting_key}`,imageData,{
+       const res= await axios.post(`https://api.imgbb.com/1/upload?key=${image_hosting_key}`,imageData,{
         headers: {
             'Content-Type': 'multipart/form-data',
           }
